@@ -109,9 +109,8 @@ FinaxysApp.controller('AuthCtrl', function($scope, $http, $location, $rootScope)
     //     localStorage.setItem("username", "");
     // }
     $scope.verify = function(username, password) {
-        console.log('{"username":"' + username + '","password":"' +
-            password + '"}');
-        $http.post("http://" + server + '/login', '{"username":"' + username + '","password":"' +
+        //console.log('{"username":"' + username + '","password":"' + password + '"}');
+        $http.post('http://' + server + '/login', '{"username":"' + username + '","password":"' +
             password + '"}').
         success(function(data) {
             $scope.greeting = data;
@@ -124,7 +123,7 @@ FinaxysApp.controller('AuthCtrl', function($scope, $http, $location, $rootScope)
         $rootScope.user = JSON.parse(localStorage.getItem("user"));
         $rootScope.user.username = username;
         $rootScope.user.password = password;
-        console.log("controller auth  username= " + $rootScope.user.username);
+        //console.log("controller auth  username= " + $rootScope.user.username);
         localStorage.setItem("user", JSON.stringify($rootScope.user));
         //$location.path('/candidat');
     }
