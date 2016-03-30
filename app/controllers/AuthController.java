@@ -17,7 +17,7 @@ public class AuthController extends Controller {
     //Takes username and password and returns JWT
     @With(CorsAction.class)
     public Result login() {
-        JsonNode json = Json.parse(request().body().asText());
+        JsonNode json = request().body().asJson();
         String username = null;
         String password = null;
         try {
