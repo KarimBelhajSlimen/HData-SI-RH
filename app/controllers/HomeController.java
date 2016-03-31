@@ -20,6 +20,6 @@ public class HomeController extends Controller {
      * <code>GET</code> request with a path of <code>/</code>.
      */
     public Result index() {
-        return ok("Hello from the other side");
+        return ok("Service is running.");
     }
 }
