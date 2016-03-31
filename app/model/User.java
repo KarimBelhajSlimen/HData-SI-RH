@@ -1,16 +1,27 @@
 package model;
 
+import net.minidev.json.JSONObject;
+
 import java.util.List;
 
 /**
  * Created by root on 23/03/16.
  */
-public class User {
+public class User implements Cloneable{
     private String email,passwordHash;
     private List<String> roles;
     private List<Education> education;
     private List<Skills> skills;
     private List<Experience> experience;
+
+    public User() {
+    }
+
+    public User(JSONObject json){
+        this.email = (String) json.get("username");
+        this.passwordHash = (String) json.get("hash");
+        this.roles = (List<String>)json.get("roles");
+    }
 
     public String getEmail() {
         return email;
@@ -70,5 +81,18 @@ public class User {
                 ", skills=" + skills +
                 ", experience=" + experience +
                 '}';
+    }
+
+
+
+    public User noPassword() {
+        try {
+            User u =(User) this.clone();
+            u.setPasswordHash("");
+            return u;
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
