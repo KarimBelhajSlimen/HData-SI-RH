@@ -10,7 +10,9 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 
 
 POST    /login                      controllers.AuthController.login
-POST    /signup                      controllers.AuthController.signUp
+POST    /signup                     controllers.AuthController.signUp
 GET     /secure                     controllers.SecureController.secure
+POST    /profile                    controllers.UserController.addProfile
+
 
 OPTIONS /*all                       controllers.CorsController.options(all)

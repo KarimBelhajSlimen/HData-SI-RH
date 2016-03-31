@@ -4,23 +4,14 @@ package model;
  * Created by root on 30/03/16.
  */
 public class Experience {
-    int begin_year,end_year;
-    String company, position, description;
+    String company, position, description, date;
 
-    public int getBegin_year() {
-        return begin_year;
+    public String getDate() {
+        return date;
     }
 
-    public void setBegin_year(int begin_year) {
-        this.begin_year = begin_year;
-    }
-
-    public int getEnd_year() {
-        return end_year;
-    }
-
-    public void setEnd_year(int end_year) {
-        this.end_year = end_year;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getCompany() {
@@ -45,5 +36,15 @@ public class Experience {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "Experience{" +
+                "company='" + company + '\'' +
+                ", position='" + position + '\'' +
+                ", description='" + description + '\'' +
+                ", date='" + date + '\'' +
+                '}';
     }
 }

@@ -1,10 +1,12 @@
 package dao;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import model.Experience;
 import model.User;
-import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.*;
 import org.apache.hadoop.hbase.util.Bytes;
+import play.libs.Json;
 import utils.HBUtil;
 
 import java.io.IOException;
@@ -24,7 +26,7 @@ public class UserDAO{
                 throw new UnknownUsername();
             }
             else {
-                u.setEmail(Bytes.toString(r.getValue(Bytes.toBytes("credentials"), Bytes.toBytes("email"))));
+                u.setEmail(username);
                 u.setPasswordHash(Bytes.toString(r.getValue(Bytes.toBytes("credentials"), Bytes.toBytes("password"))));
                 String roles = (Bytes.toString(r.getValue(Bytes.toBytes("credentials"), Bytes.toBytes("roles"))));
                 u.setRoles(Arrays.asList(roles.split("-")));
@@ -68,5 +70,25 @@ public class UserDAO{
         } finally {
             connection.close();
         }
+    }
+
+    public void addProfile(User u){
+        /*Experience e = new Experience();
+        e.setBegin_year(2011);
+        e.setEnd_year(2012);
+        e.setCompany("ok");
+        e.setDescription("desc");
+        e.setPosition("eee");
+        u.setExperience(Arrays.asList( new Experience[]{
+            e
+        }
+        ));
+
+        JsonNode json = Json.toJson(u);
+        System.out.println("11111"+Json.stringify(Json.toJson(u.getExperience())));
+        System.out.println("#####"+Json.stringify(json));
+        User u2 = Json.fromJson(json,User.class);
+        System.out.println(u2.toString());*/
+
     }
 }

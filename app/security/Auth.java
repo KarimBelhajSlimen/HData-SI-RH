@@ -45,7 +45,6 @@ public class Auth {
                 .expirationTime(new Date(new Date().getTime() + 48 * 60 * 60 * 1000))
                 .claim("user",user.noPassword())
                 .build();
-
         SignedJWT signedJWT = new SignedJWT(
                 new JWSHeader(JWSAlgorithm.RS256),
                 claimsSet);
@@ -85,6 +84,11 @@ public class Auth {
         JSONObject JSONUser =  (JSONObject) signedJWT.getJWTClaimsSet().getClaim("user");
         User u = new User( JSONUser);
         Date expirationDate = signedJWT.getJWTClaimsSet().getExpirationTime();
+        /*
+        System.out.println( JSONUser.toJSONString());
+        UserDAO userDAO = new UserDAO();
+        userDAO.addProfile(u);
+        */
         return new JWT(u,expirationDate);
     }
 
