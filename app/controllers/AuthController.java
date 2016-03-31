@@ -1,12 +1,10 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.sun.org.apache.xpath.internal.SourceTree;
 import cors.CorsAction;
 import dao.UnknownUsername;
 import dao.UserDAO;
 import model.User;
-import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.With;
@@ -17,12 +15,11 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
-public class AuthController extends Controller {
+public class AuthController extends RestController {
 
     //Takes username and password and returns JWT
-    @With(CorsAction.class)
     public Result login() {
-        JsonNode json = request().body().asJson();
+        JsonNode json = jsonRequest();
         String username = null;
         String password = null;
         try {
@@ -43,9 +40,8 @@ public class AuthController extends Controller {
     }
 
     //Takes username and password and returns JWT
-    @With(CorsAction.class)
     public Result signUp() throws NoSuchAlgorithmException, IOException {
-        JsonNode json = request().body().asJson();
+        JsonNode json = jsonRequest();
         String username = null;
         String password = null;
         try {

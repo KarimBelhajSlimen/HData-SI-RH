@@ -1,10 +1,6 @@
 package controllers;
 
-import cors.CorsAction;
-import security.Secure;
 import play.mvc.*;
-
-import views.html.*;
 
 
 /**
