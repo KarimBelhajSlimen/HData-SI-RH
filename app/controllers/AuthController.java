@@ -3,6 +3,7 @@ package controllers;
 import com.fasterxml.jackson.databind.JsonNode;
 import cors.CorsAction;
 import dao.UnknownUsername;
+import dao.UserAlreadyExistsException;
 import dao.UserDAO;
 import model.User;
 import play.mvc.Controller;
@@ -52,10 +53,14 @@ public class AuthController extends RestController {
         }
         User user = new User();
         user.setEmail(username);
-        user.setRoles( Arrays.asList("user")  );
+        user.setRoles( Arrays.asList(new String[]{"user"})  );
         user.setPasswordHash( new HashUtil().hash(password) );
         UserDAO userDAO = new UserDAO();
-        userDAO.createUser(user);
+        try {
+            userDAO.createUser(user);
+        } catch (UserAlreadyExistsException e) {
+            return unauthorized("user_already_exists");
+        }
         Auth auth = new Auth();
         return ok(auth.generateJWT(user));
     }

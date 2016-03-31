@@ -36,11 +36,19 @@ public class UserDAO{
 
     }
 
-    public void createUser(User u) throws IOException {
+    public void createUser(User u) throws UserAlreadyExistsException, IOException {
         HBUtil hbUtil = new HBUtil();
         Connection connection = hbUtil.getConnection();
         try {
             Table table = connection.getTable(TableName.valueOf("users"));
+
+            //check if user exists
+            Get g = new Get(Bytes.toBytes(u.getEmail()));
+            Result r = table.get(g);
+            if(r.size() != 0){
+                throw new UserAlreadyExistsException();
+            }
+
             try {
                 Put p = new Put(Bytes.toBytes( u.getEmail() ));
                 p.add(Bytes.toBytes("credentials"), Bytes.toBytes("password"),
