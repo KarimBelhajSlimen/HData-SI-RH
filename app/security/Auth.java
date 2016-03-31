@@ -79,9 +79,10 @@ public class Auth {
         if (verify == false) throw new WrongJWTException();
 
         JSONObject JSONUser =  (JSONObject) signedJWT.getJWTClaimsSet().getClaim("user");
-        User u = new User( (String)JSONUser.get("username"),
+        /*User u = new User( (String)JSONUser.get("username"),
                 (String)JSONUser.get("hash"),
-                (List<String>)JSONUser.get("roles") );
+                (List<String>)JSONUser.get("roles") );*/
+        User u = new User();
         Date expirationDate = signedJWT.getJWTClaimsSet().getExpirationTime();
         return new JWT(u,expirationDate);
     }

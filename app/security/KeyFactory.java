@@ -1,6 +1,7 @@
 package security;
 
 import play.Play;
+import utils.PlayUtil;
 
 import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
@@ -23,8 +24,9 @@ public class KeyFactory {
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-        BigInteger m = new BigInteger(Play.application().configuration().getString("keys.private.modulus"));
-        BigInteger exp = new BigInteger(Play.application().configuration().getString("keys.private.exponent"));
+        PlayUtil playUtil = new PlayUtil();
+        BigInteger m = new BigInteger(playUtil.getProperty("keys.private.modulus"));
+        BigInteger exp = new BigInteger(playUtil.getProperty("keys.private.exponent"));
         RSAPrivateKeySpec keySpec = new RSAPrivateKeySpec(m, exp);
         RSAPrivateKey privateKey = null;
         try {
@@ -43,8 +45,9 @@ public class KeyFactory {
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-        BigInteger m = new BigInteger(Play.application().configuration().getString("keys.public.modulus"));
-        BigInteger exp = new BigInteger(Play.application().configuration().getString("keys.public.exponent"));
+        PlayUtil playUtil = new PlayUtil();
+        BigInteger m = new BigInteger(playUtil.getProperty("keys.public.modulus"));
+        BigInteger exp = new BigInteger(playUtil.getProperty("keys.public.exponent"));
         RSAPublicKeySpec keySpec = new RSAPublicKeySpec(m, exp);
         RSAPublicKey publicKey = null;
         try {

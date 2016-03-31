@@ -6,32 +6,26 @@ import java.util.List;
  * Created by root on 23/03/16.
  */
 public class User {
-    private String username,hash;
+    private String email,passwordHash;
     private List<String> roles;
+    private List<Education> education;
+    private List<Skills> skills;
+    private List<Experience> experience;
 
-    public User() {
+    public String getEmail() {
+        return email;
     }
 
-    public User(String username, String hash, List<String> roles) {
-        this.username = username;
-        this.hash = hash;
-        this.roles = roles;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getUsername() {
-        return username;
+    public String getPasswordHash() {
+        return passwordHash;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getHash() {
-        return hash;
-    }
-
-    public void setHash(String hash) {
-        this.hash = hash;
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
     }
 
     public List<String> getRoles() {
@@ -42,33 +36,39 @@ public class User {
         this.roles = roles;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        User user = (User) o;
-
-        if (username != null ? !username.equals(user.username) : user.username != null) return false;
-        if (hash != null ? !hash.equals(user.hash) : user.hash != null) return false;
-        return roles != null ? roles.equals(user.roles) : user.roles == null;
-
+    public List<Education> getEducation() {
+        return education;
     }
 
-    @Override
-    public int hashCode() {
-        int result = username != null ? username.hashCode() : 0;
-        result = 31 * result + (hash != null ? hash.hashCode() : 0);
-        result = 31 * result + (roles != null ? roles.hashCode() : 0);
-        return result;
+    public void setEducation(List<Education> education) {
+        this.education = education;
+    }
+
+    public List<Skills> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(List<Skills> skills) {
+        this.skills = skills;
+    }
+
+    public List<Experience> getExperience() {
+        return experience;
+    }
+
+    public void setExperience(List<Experience> experience) {
+        this.experience = experience;
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "username='" + username + '\'' +
-                ", hash='" + hash + '\'' +
+                "email='" + email + '\'' +
+                ", passwordHash='" + passwordHash + '\'' +
                 ", roles=" + roles +
+                ", education=" + education +
+                ", skills=" + skills +
+                ", experience=" + experience +
                 '}';
     }
 }
