@@ -5,9 +5,12 @@ import com.nimbusds.jose.crypto.RSASSASigner;
 import com.nimbusds.jose.crypto.RSASSAVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+import dao.UserDAO;
 import model.User;
 import net.minidev.json.JSONObject;
+import utils.HashUtil;
 
+import java.security.NoSuchAlgorithmException;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.text.ParseException;
@@ -22,7 +25,8 @@ public class Auth {
 
     //Check password
     public boolean authentify(User user, String password){
-        return true;
+        HashUtil hashUtil = new HashUtil();
+        return (user.getPasswordHash()).equals( hashUtil.hash(password) );
     }
 
     //Generate JWT using user credentials

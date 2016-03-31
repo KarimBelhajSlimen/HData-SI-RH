@@ -18,7 +18,7 @@ import java.util.Arrays;
 public class AuthController extends RestController {
 
     //Takes username and password and returns JWT
-    public Result login() {
+    public Result login() throws IOException {
         JsonNode json = jsonRequest();
         String username = null;
         String password = null;

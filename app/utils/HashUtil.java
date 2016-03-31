@@ -7,9 +7,14 @@ import java.security.NoSuchAlgorithmException;
  * Created by root on 30/03/16.
  */
 public class HashUtil {
-    public String hash(String s) throws NoSuchAlgorithmException {
+    public String hash(String s){
 
-        MessageDigest md = MessageDigest.getInstance("MD5");
+        MessageDigest md = null;
+        try {
+            md = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
         md.update(s.getBytes());
 
         byte byteData[] = md.digest();
