@@ -163,7 +163,7 @@ public class UserDAO{
                 throw new UnknownUsername();
             }
             else {
-                return Bytes.toString(r.getValue(Bytes.toBytes("credentials"), Bytes.toBytes("picture")));
+                return Bytes.toString(r.getValue(Bytes.toBytes("personal"), Bytes.toBytes("picture")));
 
             }
         } finally {

@@ -27,8 +27,10 @@ public class UserController extends RestController {
         u.setEmail(credentials().getEmail());
         UserDAO userDAO = new UserDAO();
         userDAO.addProfile(u);
+        userDAO.addPicture(jsonRequest().findPath("picture").asText(),u.getEmail());
         Map<String,Object> map = new HashMap();
         map.put("user",u);
+        map.put("picture",jsonRequest().findPath("picture").asText());
         return ok( Json.stringify( Json.toJson(map) ) );
     }
 
@@ -36,10 +38,10 @@ public class UserController extends RestController {
         UserDAO userDAO = new UserDAO();
         User u = userDAO.getByUsername(credentials().getEmail());
         u = u.noPassword();
-        //String picture = userDAO.getPicture(credentials().getEmail());
+        String picture = userDAO.getPicture(credentials().getEmail());
         Map<String,Object> map = new HashMap();
         map.put("user",u);
-        //map.put("picture",picture);
+        map.put("picture",picture);
         System.out.println(Json.stringify( Json.toJson(map) ) );
         return ok( Json.stringify( Json.toJson(map) ) );
 
