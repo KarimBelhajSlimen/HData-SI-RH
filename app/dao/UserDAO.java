@@ -1,6 +1,7 @@
 package dao;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import model.Education;
 import model.Experience;
 import model.User;
 import org.apache.hadoop.hbase.TableName;
@@ -11,6 +12,7 @@ import utils.HBUtil;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 
 public class UserDAO{
     public User getByUsername(String username) throws UnknownUsername, IOException {
@@ -30,6 +32,21 @@ public class UserDAO{
                 u.setPasswordHash(Bytes.toString(r.getValue(Bytes.toBytes("credentials"), Bytes.toBytes("password"))));
                 String roles = (Bytes.toString(r.getValue(Bytes.toBytes("credentials"), Bytes.toBytes("roles"))));
                 u.setRoles(Arrays.asList(roles.split("-")));
+                u.setFirstname(Bytes.toString(r.getValue(Bytes.toBytes("personal"), Bytes.toBytes("firstname"))));
+                u.setLastname(Bytes.toString(r.getValue(Bytes.toBytes("personal"), Bytes.toBytes("lastname"))));
+                u.setNumber(Bytes.toString(r.getValue(Bytes.toBytes("personal"), Bytes.toBytes("number"))));
+                u.setAddress(Bytes.toString(r.getValue(Bytes.toBytes("personal"), Bytes.toBytes("address"))));
+                u.setDescription(Bytes.toString(r.getValue(Bytes.toBytes("personal"), Bytes.toBytes("description"))));
+                u.setGithub(Bytes.toString(r.getValue(Bytes.toBytes("personal"), Bytes.toBytes("github"))));
+                u.setLinkedin(Bytes.toString(r.getValue(Bytes.toBytes("personal"), Bytes.toBytes("linkedin"))));
+                u.setDob(Bytes.toString(r.getValue(Bytes.toBytes("personal"), Bytes.toBytes("dob"))));
+                //Education e = Json.fromJson(Bytes.toString(r.getValue(Bytes.toBytes("cv"), Bytes.toBytes("dob"))),Education.class);
+                JsonNode educationJson = Json.parse(Bytes.toString(r.getValue(Bytes.toBytes("cv"), Bytes.toBytes("education"))));
+                u.setEducation( Json.fromJson(educationJson, List.class ));
+                JsonNode experiencesJson = Json.parse(Bytes.toString(r.getValue(Bytes.toBytes("cv"), Bytes.toBytes("experiences"))));
+                u.setExperiences( Json.fromJson(experiencesJson, List.class ));
+                JsonNode skillsJson = Json.parse(Bytes.toString(r.getValue(Bytes.toBytes("cv"), Bytes.toBytes("skills"))));
+                u.setSkills( Json.fromJson(skillsJson, List.class ));
                 return u;
             }
         } finally {
@@ -86,7 +103,7 @@ public class UserDAO{
                         Bytes.toBytes( u.getLastname() ));
                 p.add(Bytes.toBytes("personal"), Bytes.toBytes("number"),
                         Bytes.toBytes( u.getNumber() ));
-                p.add(Bytes.toBytes("personal"), Bytes.toBytes("adress"),
+                p.add(Bytes.toBytes("personal"), Bytes.toBytes("address"),
                         Bytes.toBytes( u.getAddress() ));
                 p.add(Bytes.toBytes("personal"), Bytes.toBytes("description"),
                         Bytes.toBytes( u.getDescription() ));
@@ -106,6 +123,48 @@ public class UserDAO{
                 table.put(p);
             } finally {
                 if (table != null) table.close();
+            }
+        } finally {
+            if (table != null) table.close();
+        }
+
+    }
+
+    public void addPicture(String picture,String username) throws IOException {
+        HBUtil hbUtil = new HBUtil();
+        Connection connection = hbUtil.getConnection();
+        Table table = connection.getTable(TableName.valueOf("users"));
+        try {
+
+            try {
+                Put p = new Put(Bytes.toBytes( username ));
+                p.add(Bytes.toBytes("personal"), Bytes.toBytes("picture"),
+                        Bytes.toBytes( picture ));
+
+                table.put(p);
+            } finally {
+                if (table != null) table.close();
+            }
+        } finally {
+            if (table != null) table.close();
+        }
+    }
+
+    public String getPicture(String username) throws IOException, UnknownUsername {
+        User u = new User();
+        HBUtil hbUtil = new HBUtil();
+        Connection connection = hbUtil.getConnection();
+        Table table = connection.getTable(TableName.valueOf("users"));
+        try {
+            Get g = new Get(Bytes.toBytes(username));
+            Result r = table.get(g);
+
+            if(r.size() == 0){
+                throw new UnknownUsername();
+            }
+            else {
+                return Bytes.toString(r.getValue(Bytes.toBytes("credentials"), Bytes.toBytes("picture")));
+
             }
         } finally {
             if (table != null) table.close();

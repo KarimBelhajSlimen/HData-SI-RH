@@ -13,6 +13,6 @@ POST    /login                      controllers.AuthController.login
 POST    /signup                     controllers.AuthController.signUp
 GET     /secure                     controllers.SecureController.secure
 POST    /profile                    controllers.UserController.addProfile
-
+GET     /profile                     controllers.UserController.getProfile
 
 OPTIONS /*all                       controllers.CorsController.options(all)

@@ -29,9 +29,17 @@ public class RestController extends Controller {
         else return Json.parse(request().body().asText());
     }
 
-    Credentials credentials() throws ParseException, WrongJWTException {
+    Credentials credentials() {
         String jwt = request().getHeader("jwt");
         Auth auth = new Auth();
-        return auth.parseJWT(jwt).getCredentials();
+        Credentials c = null;
+        try {
+            c = auth.parseJWT(jwt).getCredentials();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (WrongJWTException e) {
+            e.printStackTrace();
+        }
+        return c;
     }
 }
