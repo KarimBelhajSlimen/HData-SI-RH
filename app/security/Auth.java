@@ -43,7 +43,7 @@ public class Auth {
                 .subject("user")
                 .issuer("Finaxys Academy")
                 .expirationTime(new Date(new Date().getTime() + 48 * 60 * 60 * 1000))
-                .claim("user",user.noPassword())
+                .claim("user", new Credentials(user.getEmail(),user.getRoles()))
                 .build();
         SignedJWT signedJWT = new SignedJWT(
                 new JWSHeader(JWSAlgorithm.RS256),
@@ -82,14 +82,9 @@ public class Auth {
         if (verify == false) throw new WrongJWTException();
 
         JSONObject JSONUser =  (JSONObject) signedJWT.getJWTClaimsSet().getClaim("user");
-        User u = new User( JSONUser);
+        Credentials c = new Credentials( JSONUser);
         Date expirationDate = signedJWT.getJWTClaimsSet().getExpirationTime();
-        /*
-        System.out.println( JSONUser.toJSONString());
-        UserDAO userDAO = new UserDAO();
-        userDAO.addProfile(u);
-        */
-        return new JWT(u,expirationDate);
+        return new JWT(c,expirationDate);
     }
 
 }

@@ -37,7 +37,7 @@ public class SecureAction extends play.mvc.Action<Secure>{
         }
 
         for(String s : roles){
-            if ( jwt.getUser().getRoles().contains(s) ) return delegate.call(ctx);
+            if ( jwt.getCredentials().getRoles().contains(s) ) return delegate.call(ctx);
         }
         return F.Promise.pure( unauthorized("unauthorized_access") );
     }

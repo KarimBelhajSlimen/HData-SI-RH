@@ -9,23 +9,23 @@ import java.util.Date;
  */
 public class JWT {
 
-    private User user;
+    private Credentials credentials;
     private Date expirationDate;
 
     public JWT() {
     }
 
-    public JWT(User user, Date expirationDate) {
-        this.user = user;
+    public JWT(Credentials credentials, Date expirationDate) {
+        this.credentials = credentials;
         this.expirationDate = expirationDate;
     }
 
-    public User getUser() {
-        return user;
+    public Credentials getCredentials() {
+        return credentials;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setCredentials(Credentials credentials) {
+        this.credentials = credentials;
     }
 
     public Date getExpirationDate() {

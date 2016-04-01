@@ -72,23 +72,44 @@ public class UserDAO{
         }
     }
 
-    public void addProfile(User u){
-        /*Experience e = new Experience();
-        e.setBegin_year(2011);
-        e.setEnd_year(2012);
-        e.setCompany("ok");
-        e.setDescription("desc");
-        e.setPosition("eee");
-        u.setExperience(Arrays.asList( new Experience[]{
-            e
-        }
-        ));
+    public void addProfile(User u) throws IOException {
+        HBUtil hbUtil = new HBUtil();
+        Connection connection = hbUtil.getConnection();
+        Table table = connection.getTable(TableName.valueOf("users"));
+        try {
 
-        JsonNode json = Json.toJson(u);
-        System.out.println("11111"+Json.stringify(Json.toJson(u.getExperience())));
-        System.out.println("#####"+Json.stringify(json));
-        User u2 = Json.fromJson(json,User.class);
-        System.out.println(u2.toString());*/
+            try {
+                Put p = new Put(Bytes.toBytes( u.getEmail() ));
+                p.add(Bytes.toBytes("personal"), Bytes.toBytes("firstname"),
+                        Bytes.toBytes( u.getFirstname() ));
+                p.add(Bytes.toBytes("personal"), Bytes.toBytes("lastname"),
+                        Bytes.toBytes( u.getLastname() ));
+                p.add(Bytes.toBytes("personal"), Bytes.toBytes("number"),
+                        Bytes.toBytes( u.getNumber() ));
+                p.add(Bytes.toBytes("personal"), Bytes.toBytes("adress"),
+                        Bytes.toBytes( u.getAddress() ));
+                p.add(Bytes.toBytes("personal"), Bytes.toBytes("description"),
+                        Bytes.toBytes( u.getDescription() ));
+                p.add(Bytes.toBytes("personal"), Bytes.toBytes("github"),
+                        Bytes.toBytes( u.getGithub() ));
+                p.add(Bytes.toBytes("personal"), Bytes.toBytes("linkedin"),
+                        Bytes.toBytes( u.getLinkedin() ));
+                p.add(Bytes.toBytes("personal"), Bytes.toBytes("dob"),
+                        Bytes.toBytes( u.getDob() ));
+                p.add(Bytes.toBytes("cv"), Bytes.toBytes("experiences"),
+                        Bytes.toBytes( Json.stringify(Json.toJson(u.getExperiences()))));
+                p.add(Bytes.toBytes("cv"), Bytes.toBytes("skills"),
+                        Bytes.toBytes( Json.stringify(Json.toJson(u.getSkills()))));
+                p.add(Bytes.toBytes("cv"), Bytes.toBytes("education"),
+                        Bytes.toBytes( Json.stringify(Json.toJson(u.getEducation()))));
+
+                table.put(p);
+            } finally {
+                if (table != null) table.close();
+            }
+        } finally {
+            if (table != null) table.close();
+        }
 
     }
 }
