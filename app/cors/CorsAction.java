@@ -10,7 +10,9 @@ import java.util.concurrent.CompletionStage;
  */
 public class CorsAction extends play.mvc.Action.Simple{
 
-    //Adds Access-Control-Allow-Origin headers
+    /**
+     * Adds Access-Control-Allow-Origin headers
+     */
     @Override
     public CompletionStage<Result> call(Http.Context ctx) {
         ctx.response().setHeader("Access-Control-Allow-Origin", "*");

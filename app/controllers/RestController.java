@@ -14,12 +14,14 @@ import security.WrongJWTException;
 import java.text.ParseException;
 
 
-/**
- * This controller contains an action to handle HTTP requests
- * to the application's home page.
- */
 @With(CorsAction.class)
 public class RestController extends Controller {
+
+    /**
+     * Returns JSON inside body of a request
+     * Calls different methods epending of "Content-Type" header in the request's body
+     */
+
 
     JsonNode jsonRequest(){
         JsonNode json = request().body().asJson();
@@ -29,6 +31,9 @@ public class RestController extends Controller {
         else return Json.parse(request().body().asText());
     }
 
+    /**
+     * Returns Credentials contained in JWT, contained in the "jwt" header
+     */
     Credentials credentials() {
         String jwt = request().getHeader("jwt");
         Auth auth = new Auth();

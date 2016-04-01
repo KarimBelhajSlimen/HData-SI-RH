@@ -13,7 +13,9 @@ import java.util.concurrent.CompletionStage;
  */
 public class SecureAction extends play.mvc.Action<Secure>{
 
-    //Check the JWT
+    /**
+     * Checks JWT signature and user rights
+     */
     @Override
     public CompletionStage<Result> call(Http.Context ctx) {
         //redirect if it's not secure

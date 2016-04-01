@@ -7,6 +7,9 @@ import java.security.NoSuchAlgorithmException;
  * Created by root on 30/03/16.
  */
 public class HashUtil {
+    /**
+     * Perform MD5 hashing
+     */
     public String hash(String s){
 
         MessageDigest md = null;

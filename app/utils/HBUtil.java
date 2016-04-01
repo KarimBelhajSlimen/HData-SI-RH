@@ -12,6 +12,9 @@ import java.math.BigInteger;
  */
 public class HBUtil {
 
+    /**
+     * Creates connection to the database
+     */
     public Connection getConnection() throws IOException {
         PlayUtil playUtil = new PlayUtil();
 

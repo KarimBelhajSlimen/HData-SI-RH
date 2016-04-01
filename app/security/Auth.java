@@ -19,17 +19,26 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by root on 23/03/16.
+ * Handles JWT generation and parsing
  */
 public class Auth {
 
-    //Check password
+    /**
+     *
+     * @param user User data stored in the DB
+     * @param password Password given bu the user
+     * @return true if the password is right
+     */
     public boolean authentify(User user, String password){
         HashUtil hashUtil = new HashUtil();
         return (user.getPasswordHash()).equals( hashUtil.hash(password) );
     }
 
-    //Generate JWT using user credentials
+    /**
+     *
+     * @param user User data
+     * @return new JWT token containing username and roles
+     */
     public String generateJWT(User user){
         KeyFactory keyFactory = new KeyFactory();
         RSAPrivateKey privateKey = keyFactory.getPrivateKey();
@@ -61,7 +70,14 @@ public class Auth {
         return s;
     }
 
-    //Parse JWT, throw exception when the signature is wrong
+    /**
+     *
+     * @param s JWT as String
+     * @return Credentials and Expiration Date
+     * @throws ParseException JWT wasn't correctly parsed
+     * @throws WrongJWTException Signature is wrong
+     * @throws NullPointerException
+     */
     public JWT parseJWT(String s) throws ParseException, WrongJWTException, NullPointerException {
         KeyFactory keyFactory = new KeyFactory();
         RSAPublicKey publicKey = keyFactory.getPublicKey();

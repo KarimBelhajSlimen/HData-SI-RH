@@ -18,7 +18,9 @@ import java.util.Arrays;
 
 public class AuthController extends RestController {
 
-    //Takes username and password and returns JWT
+    /**
+     * Takes credentials and returns JWT when successfull
+     */
     public Result login() throws IOException {
         JsonNode json = jsonRequest();
         String username = null;
@@ -40,7 +42,9 @@ public class AuthController extends RestController {
         else return ok(auth.generateJWT(user));
     }
 
-    //Takes username and password and returns JWT
+    /**
+     * Creates new user and returns JWT
+     */
     public Result signUp() throws NoSuchAlgorithmException, IOException {
         JsonNode json = jsonRequest();
         String username = null;

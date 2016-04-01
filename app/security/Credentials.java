@@ -4,9 +4,10 @@ import net.minidev.json.JSONObject;
 import java.util.List;
 
 /**
- * Created by root on 01/04/16.
+ * Contains email and roles
  */
 public class Credentials {
+
     private String email;
     private List<String> roles;
 

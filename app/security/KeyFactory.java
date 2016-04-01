@@ -12,11 +12,14 @@ import java.security.spec.RSAPrivateKeySpec;
 import java.security.spec.RSAPublicKeySpec;
 
 /**
- * Created by root on 23/03/16.
+ * Reads keys from String
  */
 public class KeyFactory {
 
-    //reads Private Key
+    /**
+     *
+     * @return RSA private key
+     */
     public RSAPrivateKey getPrivateKey(){
         java.security.KeyFactory fact = null;
         try {
@@ -37,7 +40,10 @@ public class KeyFactory {
         return privateKey;
     }
 
-    //reads Public Key
+    /**
+     *
+     * @return RSA public key
+     */
     public RSAPublicKey getPublicKey(){
         java.security.KeyFactory fact = null;
         try {

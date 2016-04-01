@@ -5,7 +5,7 @@ import model.User;
 import java.util.Date;
 
 /**
- * Created by root on 24/03/16.
+ * Contains Username, role,s and Expiration date
  */
 public class JWT {
 
