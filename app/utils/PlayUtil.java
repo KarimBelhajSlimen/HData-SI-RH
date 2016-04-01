@@ -1,5 +1,7 @@
 package utils;
 
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
 import play.Play;
 
 /**
@@ -12,6 +14,7 @@ public class PlayUtil {
      * @return Value
      */
     public String getProperty(String s){
-        return Play.application().configuration().getString(s);
+        Config conf = ConfigFactory.load();
+        return  conf.getString(s);
     }
 }

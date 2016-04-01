@@ -22,7 +22,7 @@ public class SecureAction extends play.mvc.Action<Secure>{
         String JWT = ctx.request().getHeader("jwt");
         Auth auth = new Auth();
         String[] roles = configuration.value();
-        JWT jwt = null;
+        JWT jwt;
         try {
             jwt = auth.parseJWT(JWT);
         } catch (ParseException e) {
