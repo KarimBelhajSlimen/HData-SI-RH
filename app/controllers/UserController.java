@@ -19,7 +19,7 @@ import java.util.Map;
  * Created by root on 23/03/16.
  */
 
-@Secure({"user"})
+@Secure({"user","admin","RH","consultant"})
 public class UserController extends RestController {
 
     public Result addProfile() throws IOException {

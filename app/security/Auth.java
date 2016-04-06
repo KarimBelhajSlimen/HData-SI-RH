@@ -34,6 +34,26 @@ public class Auth {
         return (user.getPasswordHash()).equals( hashUtil.hash(password) );
     }
 
+
+    public boolean verifyRoles(User user, List<String> roles){
+        boolean exist=false;
+        int i=0, j=0;
+
+        while( !exist && i<user.getRoles().size()){
+
+            while ( !exist && j<roles.size()){
+
+                if(user.getRoles().get(i).equals(roles.get(j))) exist=true;
+                j++;
+            }
+
+            i++;
+        }
+
+        return (exist);
+    }
+
+
     /**
      *
      * @param user User data

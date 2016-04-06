@@ -11,8 +11,12 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 
 POST    /login                      controllers.AuthController.login
 POST    /signup                     controllers.AuthController.signUp
+POST    /loginstaff                 controllers.AuthStaffController.loginStaff
+POST    /addstaff                   controllers.AuthStaffController.addMemberStaff
 GET     /secure                     controllers.SecureController.secure
 POST    /profile                    controllers.UserController.addProfile
-GET     /profile                     controllers.UserController.getProfile
+GET     /profile                    controllers.UserController.getProfile
+GET     /liststaff                  controllers.StaffController.getList
+GET     /getmember/*email            controllers.StaffController.getMember(email)
 
 OPTIONS /*all                       controllers.CorsController.options(all)
