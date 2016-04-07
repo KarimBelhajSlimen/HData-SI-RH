@@ -27,8 +27,9 @@ import security.Auth;
 /**
  * Created by root on 23/03/16.
  */
-
 public class StaffController extends RestController {
+
+
 
     public Result getList() throws IOException, UnknownUsername {
 

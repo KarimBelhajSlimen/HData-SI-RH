@@ -15,7 +15,9 @@ import utils.HashUtil;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 
 public class AuthController extends RestController {
@@ -42,7 +44,10 @@ public class AuthController extends RestController {
             return unauthorized("unknown_username");
         }
         Auth auth = new Auth();
+        List<String> roles=new ArrayList<String>();
+        roles.add("user");
         if( auth.authentify(user,password) == false ) return unauthorized("wrong_credentials");
+        else if( auth.verifyRoles(user,roles) == false ) return unauthorized("unauthorized");
         else return ok(auth.generateJWT(user));
     }
 
