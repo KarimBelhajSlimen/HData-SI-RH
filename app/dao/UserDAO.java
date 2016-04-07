@@ -191,6 +191,8 @@ public class UserDAO{
                         Bytes.toBytes( u.getLinkedin() ));
                 p.add(Bytes.toBytes("personal"), Bytes.toBytes("github"),
                         Bytes.toBytes( u.getGithub() ));
+                p.add(Bytes.toBytes("personal"), Bytes.toBytes("picture"),
+                        Bytes.toBytes( "img/user.png" ));
 
                 p.add(Bytes.toBytes("cv"), Bytes.toBytes("experiences"),
                         Bytes.toBytes( Json.stringify(Json.toJson(u.getExperiences()))));
