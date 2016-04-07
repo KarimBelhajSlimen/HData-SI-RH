@@ -91,7 +91,7 @@ public class UserDAO{
 
 
     public List<HashMap> getList() throws UnknownUsername, IOException {
-        System.out.println("getting list in DAO ****" );
+        System.out.println("getting list in DAO *****" );
         User u = new User();
         HBUtil hbUtil = new HBUtil();
         Connection connection = hbUtil.getConnection();
