@@ -1,3 +1,6 @@
+import sbtdocker.DockerKeys._
+
+
 name := """HData-SI-RH"""
 
 version := "1.0-SNAPSHOT"
@@ -17,3 +20,5 @@ libraryDependencies ++= Seq(
   "org.apache.hadoop" % "hadoop-common" % "2.7.1",
   "commons-logging" % "commons-logging" % "1.2"
 )
+
+

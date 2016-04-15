@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import model.Education;
 import model.Experience;
 import model.User;
+import model.Resume;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.*;
 import org.apache.hadoop.hbase.util.Bytes;
@@ -58,6 +59,34 @@ public class UserDAO{
         }
 
     }
+
+
+    public Resume getResume(String username) throws UnknownUsername, IOException {
+        Resume resume = new Resume();
+        HBUtil hbUtil = new HBUtil();
+        Connection connection = hbUtil.getConnection();
+        Table table = connection.getTable(TableName.valueOf("users"));
+        try {
+
+            Get g = new Get(Bytes.toBytes(username));
+            Result r = table.get(g);
+
+            if(r.size() == 0){
+                throw new UnknownUsername();
+            }
+            else {
+                resume.setExperiences(Bytes.toString(r.getValue(Bytes.toBytes("cv"), Bytes.toBytes("cvexperiences"))));
+                resume.setFormation(Bytes.toString(r.getValue(Bytes.toBytes("cv"), Bytes.toBytes("cveducation"))));
+                resume.setSkills(Bytes.toString(r.getValue(Bytes.toBytes("cv"), Bytes.toBytes("cvskills"))));
+                resume.setLangues(Bytes.toString(r.getValue(Bytes.toBytes("cv"), Bytes.toBytes("cvlangues"))));
+                return resume;
+            }
+        } finally {
+            if (table != null) table.close();
+        }
+
+    }
+
 
 
     public User getCredentials(String username) throws UnknownUsername, IOException {
@@ -274,6 +303,34 @@ public class UserDAO{
         }
     }
 
+    public void addExistingCV(Resume resume,String username) throws IOException {
+        HBUtil hbUtil = new HBUtil();
+        Connection connection = hbUtil.getConnection();
+        Table table = connection.getTable(TableName.valueOf("users"));
+        try {
+
+            try {
+                Put p = new Put(Bytes.toBytes( username ));
+                p.add(Bytes.toBytes("cv"), Bytes.toBytes("cveducation"),
+                        Bytes.toBytes(resume.getFormation() ));
+                p.add(Bytes.toBytes("cv"), Bytes.toBytes("cvexperiences"),
+                        Bytes.toBytes(resume.getExperiences() ));
+                p.add(Bytes.toBytes("cv"), Bytes.toBytes("cvskills"),
+                        Bytes.toBytes(resume.getSkills() ));
+                p.add(Bytes.toBytes("cv"), Bytes.toBytes("cvlangues"),
+                        Bytes.toBytes(resume.getLangues() ));
+
+                table.put(p);
+            } finally {
+                if (table != null) table.close();
+            }
+        } finally {
+            if (table != null) table.close();
+        }
+    }
+
+
+
     public String getPicture(String username) throws IOException, UnknownUsername {
         User u = new User();
         HBUtil hbUtil = new HBUtil();
@@ -295,4 +352,6 @@ public class UserDAO{
         }
 
     }
+
+
 }

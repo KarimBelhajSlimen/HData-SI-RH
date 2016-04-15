@@ -5,6 +5,8 @@ import cors.CorsAction;
 import dao.UnknownUsername;
 import dao.UserAlreadyExistsException;
 import dao.UserDAO;
+import model.Education;
+import model.Experience;
 import model.User;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -55,25 +57,46 @@ public class AuthController extends RestController {
      * Creates new user and returns JWT
      */
     public Result signUp() throws NoSuchAlgorithmException, IOException {
+
+
         JsonNode json = jsonRequest();
         String username = null;
         String password = null;
         try {
+
             username = json.findPath("username").asText();
             password = json.findPath("password").asText();
+
         }catch(NullPointerException e){
             return unauthorized("wrong_format");
         }
+
+
         User user = new User();
         user.setEmail(username);
+
         user.setRoles( Arrays.asList(new String[]{"user"})  );
         user.setPasswordHash( new HashUtil().hash(password) );
+        user.setAddress("");
+        user.setDescription("");
+        user.setDob("");
+        user.setEducation(new ArrayList<Education>());
+        user.setExperiences(new ArrayList<Experience>());
+        user.setFirstname("");
+        user.setGithub("");
+        user.setLastname("");
+        user.setLinkedin("");
+        user.setNumber("");
         UserDAO userDAO = new UserDAO();
         try {
+
             userDAO.createUser(user);
         } catch (UserAlreadyExistsException e) {
+
             return unauthorized("user_already_exists");
         }
+
+
         Auth auth = new Auth();
         return ok(auth.generateJWT(user));
     }
